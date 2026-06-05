@@ -6,15 +6,20 @@ root=Tk()
 root.title("Login Page")
 root.geometry("370x300")
 root.resizable(False, False)
+import hashlib
+
+STORED_HASH = hashlib.sha256("Shafeeq".encode()).hexdigest()
+
 def emptyfield():
-    user=entry1.get()
-    pass1=entry2.get()
-    if(user=="" or pass1==""):
+    user = entry1.get()
+    pass1 = entry2.get()
+    pass_hash = hashlib.sha256(pass1.encode()).hexdigest()
+    if user == "" or pass1 == "":
         messagebox.showinfo("Error message", "Field(s) cannot be left empty")
-    elif(user!="Shafeeq" or pass1!="Shafeeq"):
+    elif user != "Shafeeq" or pass_hash != STORED_HASH:
         messagebox.showinfo("wrong info", "Incorrect username and or password")
-    elif(user=="Shafeeq" or pass1=="Shafeeq"):
-        messagebox.showinfo("Login Successful","transporting to account")
+    else:
+        messagebox.showinfo("Login Successful", "transporting to account")
         root.destroy()
         import convert
         convert.Convert()
